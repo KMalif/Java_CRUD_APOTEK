@@ -5,10 +5,7 @@
  */
 package App;
 
-/**
- *
- * @author ACER
- */
+
 public class Resource {
     int id;
     String nama_obat;

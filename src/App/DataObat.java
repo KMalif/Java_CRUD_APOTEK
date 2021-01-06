@@ -5,10 +5,19 @@
  */
 package App;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,6 +60,7 @@ public class DataObat extends javax.swing.JPanel {
         btnTambah = new keeptoo.KButton();
         btnEdit = new keeptoo.KButton();
         btnHapus = new keeptoo.KButton();
+        btnExport = new keeptoo.KButton();
 
         setPreferredSize(new java.awt.Dimension(500, 501));
         setLayout(new java.awt.GridBagLayout());
@@ -147,6 +157,21 @@ public class DataObat extends javax.swing.JPanel {
             }
         });
 
+        btnExport.setBackground(new java.awt.Color(255, 255, 255));
+        btnExport.setText("Export Data");
+        btnExport.setkBorderRadius(45);
+        btnExport.setkEndColor(new java.awt.Color(51, 0, 204));
+        btnExport.setkHoverEndColor(new java.awt.Color(0, 204, 204));
+        btnExport.setkHoverForeGround(new java.awt.Color(255, 255, 255));
+        btnExport.setkHoverStartColor(new java.awt.Color(51, 0, 204));
+        btnExport.setkSelectedColor(new java.awt.Color(0, 255, 255));
+        btnExport.setkStartColor(new java.awt.Color(0, 204, 204));
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rSPanelGradiente1Layout = new javax.swing.GroupLayout(rSPanelGradiente1);
         rSPanelGradiente1.setLayout(rSPanelGradiente1Layout);
         rSPanelGradiente1Layout.setHorizontalGroup(
@@ -160,13 +185,11 @@ public class DataObat extends javax.swing.JPanel {
                         .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         rSPanelGradiente1Layout.setVerticalGroup(
@@ -182,6 +205,8 @@ public class DataObat extends javax.swing.JPanel {
                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(417, Short.MAX_VALUE))
         );
 
@@ -262,11 +287,63 @@ public class DataObat extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnHapusActionPerformed
 
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        
+        String path = "";
+                JFileChooser J = new JFileChooser();
+                J.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int x = J.showSaveDialog(this);
+                
+            if (x == JFileChooser.APPROVE_OPTION){
+                path = J.getSelectedFile().getPath();
+            }
+        
+            Document doc = new Document();
+            
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path + "dataObat.pdf"));
+            
+            doc.open();
+            
+            PdfPTable tbl = new PdfPTable(4);
+            
+            //add head
+            tbl.addCell("NO");
+            tbl.addCell("Nama Obat");
+            tbl.addCell("Jumlah Obat");
+            tbl.addCell("Deskripsi Obat");
+            
+            for(int i =0; i<tblObat.getRowCount();i++){
+                
+                String NO = tblObat.getValueAt(i, 0).toString();
+                String NamaObat = tblObat.getValueAt(i, 1).toString();
+                String JumlahObat = tblObat.getValueAt(i, 2).toString();
+                String DeskripsiObat = tblObat.getValueAt(i, 3).toString();
+                
+                tbl.addCell(NO);
+                tbl.addCell(NamaObat);
+                tbl.addCell(JumlahObat);
+                tbl.addCell(DeskripsiObat);
+                
+            }
+            
+                doc.add(tbl);
+                
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DataObat.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(DataObat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        doc.close();
+    }//GEN-LAST:event_btnExportActionPerformed
+
   
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private keeptoo.KButton btnEdit;
+    private keeptoo.KButton btnExport;
     private keeptoo.KButton btnHapus;
     private keeptoo.KButton btnTambah;
     private javax.swing.JLabel jLabel1;

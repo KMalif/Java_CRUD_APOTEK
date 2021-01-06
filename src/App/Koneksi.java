@@ -20,8 +20,8 @@ public class Koneksi {
     
         try {
             MysqlDataSource ds = new MysqlDataSource();
-            ds.setUser("kelasa");        
-            ds.setPassword("kelasa123");
+            ds.setUser("root");        
+            ds.setPassword("");
             ds.setServerName("localhost");
             ds.setDatabaseName("dbapotek");
             ds.setPortNumber(3306);

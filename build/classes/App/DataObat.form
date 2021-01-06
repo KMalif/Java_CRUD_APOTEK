@@ -85,6 +85,7 @@
                               <Component id="btnTambah" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
                               <Component id="btnEdit" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
                               <Component id="btnHapus" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
+                              <Component id="btnExport" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -106,6 +107,8 @@
                   <Component id="btnEdit" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                   <Component id="btnHapus" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnExport" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace pref="417" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -212,6 +215,36 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHapusActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="keeptoo.KButton" name="btnExport">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Export Data"/>
+            <Property name="kBorderRadius" type="int" value="45"/>
+            <Property name="kEndColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="0" red="33" type="rgb"/>
+            </Property>
+            <Property name="kHoverEndColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="cc" red="0" type="rgb"/>
+            </Property>
+            <Property name="kHoverForeGround" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="kHoverStartColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="0" red="33" type="rgb"/>
+            </Property>
+            <Property name="kSelectedColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="0" type="rgb"/>
+            </Property>
+            <Property name="kStartColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="cc" red="0" type="rgb"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExportActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -41,7 +41,6 @@ public class MainActivity extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mFile = new javax.swing.JMenu();
         miDataObat = new javax.swing.JMenuItem();
-        miApoteker = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miLogout = new javax.swing.JMenuItem();
 
@@ -84,6 +83,11 @@ public class MainActivity extends javax.swing.JFrame {
         getContentPane().add(rSPanelGradiente1, java.awt.BorderLayout.PAGE_END);
 
         mFile.setText("File");
+        mFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mFileActionPerformed(evt);
+            }
+        });
 
         miDataObat.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         miDataObat.setText("Data Obat");
@@ -93,10 +97,6 @@ public class MainActivity extends javax.swing.JFrame {
             }
         });
         mFile.add(miDataObat);
-
-        miApoteker.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        miApoteker.setText("Data Apoterker");
-        mFile.add(miApoteker);
         mFile.add(jSeparator1);
 
         miLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
@@ -132,6 +132,10 @@ public class MainActivity extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_miLogoutActionPerformed
 
+    private void mFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mFileActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -155,7 +159,6 @@ public class MainActivity extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenu mFile;
-    private javax.swing.JMenuItem miApoteker;
     private javax.swing.JMenuItem miDataObat;
     private javax.swing.JMenuItem miLogout;
     private rspanelgradiente.RSPanelGradiente rSPanelGradiente1;

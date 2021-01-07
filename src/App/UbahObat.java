@@ -118,7 +118,7 @@ public class UbahObat extends javax.swing.JPanel {
         String jmlh = txtjmlh.getText();
         String desc = jTextArea1.getText();
         if (nama.isEmpty()) {
-            JOptionPane.showMessageDialog(btnUbah, nama);
+            JOptionPane.showMessageDialog(this, "nama tidak boleh kosong");
             txtNama.requestFocus();
         }else{
             try {

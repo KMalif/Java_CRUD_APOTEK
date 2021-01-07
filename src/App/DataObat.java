@@ -9,8 +9,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -61,6 +64,7 @@ public class DataObat extends javax.swing.JPanel {
         btnEdit = new keeptoo.KButton();
         btnHapus = new keeptoo.KButton();
         btnExport = new keeptoo.KButton();
+        btnExportXls = new keeptoo.KButton();
 
         setPreferredSize(new java.awt.Dimension(500, 501));
         setLayout(new java.awt.GridBagLayout());
@@ -158,7 +162,7 @@ public class DataObat extends javax.swing.JPanel {
         });
 
         btnExport.setBackground(new java.awt.Color(255, 255, 255));
-        btnExport.setText("Export Data");
+        btnExport.setText("Export to Pdf");
         btnExport.setkBorderRadius(45);
         btnExport.setkEndColor(new java.awt.Color(51, 0, 204));
         btnExport.setkHoverEndColor(new java.awt.Color(0, 204, 204));
@@ -169,6 +173,21 @@ public class DataObat extends javax.swing.JPanel {
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportActionPerformed(evt);
+            }
+        });
+
+        btnExportXls.setBackground(new java.awt.Color(255, 255, 255));
+        btnExportXls.setText("Export to Xls");
+        btnExportXls.setkBorderRadius(45);
+        btnExportXls.setkEndColor(new java.awt.Color(51, 0, 204));
+        btnExportXls.setkHoverEndColor(new java.awt.Color(0, 204, 204));
+        btnExportXls.setkHoverForeGround(new java.awt.Color(255, 255, 255));
+        btnExportXls.setkHoverStartColor(new java.awt.Color(51, 0, 204));
+        btnExportXls.setkSelectedColor(new java.awt.Color(0, 255, 255));
+        btnExportXls.setkStartColor(new java.awt.Color(0, 204, 204));
+        btnExportXls.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportXlsActionPerformed(evt);
             }
         });
 
@@ -189,7 +208,8 @@ public class DataObat extends javax.swing.JPanel {
                             .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExportXls, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         rSPanelGradiente1Layout.setVerticalGroup(
@@ -207,6 +227,8 @@ public class DataObat extends javax.swing.JPanel {
                 .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnExportXls, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(417, Short.MAX_VALUE))
         );
 
@@ -301,7 +323,7 @@ public class DataObat extends javax.swing.JPanel {
             Document doc = new Document();
             
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream(path + "dataObat.pdf"));
+            PdfWriter.getInstance(doc, new FileOutputStream(path + "/dataObat.pdf"));
             
             doc.open();
             
@@ -338,12 +360,43 @@ public class DataObat extends javax.swing.JPanel {
         doc.close();
     }//GEN-LAST:event_btnExportActionPerformed
 
+    private void btnExportXlsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportXlsActionPerformed
+                                      
+        FileWriter fileWriter;
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("[B]export_output/excel[/B]"));
+        int retrival = chooser.showSaveDialog(null);
+        if (retrival == JFileChooser.APPROVE_OPTION) {
+            try{
+                TableModel tModel = tblObat.getModel();
+                fileWriter = new FileWriter(new File(chooser.getSelectedFile() + ".xls"));           
+            // write header
+                for(int i = 0; i < tModel.getColumnCount(); i++){
+                fileWriter.write(tModel.getColumnName(i).toUpperCase() + "\t");
+            }
+                fileWriter.write("\n");
+            // write record
+                for(int i=0; i < tModel.getRowCount(); i++) {
+                for(int j=0; j < tModel.getColumnCount(); j++) {
+                fileWriter.write(tModel.getValueAt(i,j).toString() + "\t");
+            }
+                fileWriter.write("\n");
+            }
+                fileWriter.close();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+        
+    }//GEN-LAST:event_btnExportXlsActionPerformed
+
   
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private keeptoo.KButton btnEdit;
     private keeptoo.KButton btnExport;
+    private keeptoo.KButton btnExportXls;
     private keeptoo.KButton btnHapus;
     private keeptoo.KButton btnTambah;
     private javax.swing.JLabel jLabel1;

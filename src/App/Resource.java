@@ -54,7 +54,4 @@ public class Resource {
         this.deskripsi = deskripsi;
     }
 
-    
-
-    
 }
